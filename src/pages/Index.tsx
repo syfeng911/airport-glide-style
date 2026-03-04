@@ -1,13 +1,23 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import HeroSection from "@/components/HeroSection";
+import ServicesSection from "@/components/ServicesSection";
+import PricingSection from "@/components/PricingSection";
+import BookingForm from "@/components/BookingForm";
+import ContactSection from "@/components/ContactSection";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main className="min-h-screen bg-background text-foreground">
+      <HeroSection />
+      <ServicesSection />
+      <PricingSection />
+      <BookingForm />
+      <ContactSection />
+      <footer className="py-8 text-center border-t border-border">
+        <p className="text-xs text-muted-foreground tracking-wide">
+          © 2024 GoHome 機場接送 · 24小時全年無休 · 桃園機場接送專家
+        </p>
+      </footer>
+    </main>
   );
 };
 
