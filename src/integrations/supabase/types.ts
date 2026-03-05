@@ -14,7 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bookings: {
+        Row: {
+          child_seat: string | null
+          city: string
+          created_at: string
+          date: string
+          district: string
+          flight_no: string | null
+          id: string
+          luggage: string
+          name: string
+          notes: string | null
+          passengers: string
+          phone: string
+          sign_board: boolean | null
+          time: string
+          type: string
+        }
+        Insert: {
+          child_seat?: string | null
+          city: string
+          created_at?: string
+          date: string
+          district: string
+          flight_no?: string | null
+          id?: string
+          luggage: string
+          name: string
+          notes?: string | null
+          passengers: string
+          phone: string
+          sign_board?: boolean | null
+          time: string
+          type: string
+        }
+        Update: {
+          child_seat?: string | null
+          city?: string
+          created_at?: string
+          date?: string
+          district?: string
+          flight_no?: string | null
+          id?: string
+          luggage?: string
+          name?: string
+          notes?: string | null
+          passengers?: string
+          phone?: string
+          sign_board?: boolean | null
+          time?: string
+          type?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
