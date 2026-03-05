@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { ChevronRight, ChevronLeft, MapPin, User, Star } from "lucide-react";
+import { ChevronRight, ChevronLeft, MapPin, User, Star, Loader2, CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const cities = ["臺北市", "基隆市", "新北市", "宜蘭縣", "新竹市", "新竹縣", "桃園市", "苗栗縣", "臺中市"];
 
 const BookingForm = () => {
   const [step, setStep] = useState(1);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [formData, setFormData] = useState({
     type: "送機",
     date: "",
@@ -35,6 +39,51 @@ const BookingForm = () => {
 
   const selectClass =
     "w-full bg-input border border-border rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:border-primary/60 transition appearance-none";
+
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const { error } = await supabase.functions.invoke("send-line-notification", {
+        body: formData,
+      });
+      if (error) throw error;
+      setSubmitted(true);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "發生錯誤，請稍後再試";
+      setSubmitError(msg);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (submitted) {
+    return (
+      <section id="booking" className="py-28 px-6">
+        <div className="max-w-3xl mx-auto">
+          <p className="section-subtitle">BOOKING</p>
+          <h2 className="section-title">立即預約</h2>
+          <div className="gold-divider" />
+          <div className="card-glass rounded-2xl p-12 flex flex-col items-center text-center gap-6">
+            <CheckCircle className="w-16 h-16 text-primary" />
+            <div>
+              <h3 className="text-xl font-bold text-foreground mb-2">預約資料已送出！</h3>
+              <p className="text-muted-foreground text-sm">我們已收到您的預約資訊，將盡快與您確認行程。</p>
+            </div>
+            <a
+              href="https://line.me/R/ti/p/@200ycrlk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-bold"
+            >
+              加入 LINE 完成最終確認
+              <ChevronRight size={16} />
+            </a>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="booking" className="py-28 px-6">
@@ -224,11 +273,12 @@ const BookingForm = () => {
                   onChange={(e) => update("notes", e.target.value)}
                 />
               </div>
-              <div className="p-4 rounded-xl bg-primary/5 border border-primary/20">
-                <p className="text-xs text-primary text-center">
-                  完成後請加入 LINE 官方帳號 <strong>@200ycrlk</strong> 完成預約確認
-                </p>
-              </div>
+
+              {submitError && (
+                <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/30">
+                  <p className="text-xs text-destructive text-center">{submitError}</p>
+                </div>
+              )}
             </div>
           )}
 
@@ -237,7 +287,8 @@ const BookingForm = () => {
             {step > 1 && (
               <button
                 onClick={() => setStep(step - 1)}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl border border-border text-muted-foreground hover:border-primary/40 hover:text-foreground transition text-sm"
+                disabled={submitting}
+                className="flex items-center gap-2 px-6 py-3 rounded-xl border border-border text-muted-foreground hover:border-primary/40 hover:text-foreground transition text-sm disabled:opacity-50"
               >
                 <ChevronLeft size={16} />
                 上一步
@@ -252,15 +303,23 @@ const BookingForm = () => {
                 <ChevronRight size={16} />
               </button>
             ) : (
-              <a
-                href="https://line.me/R/ti/p/@200ycrlk"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gold flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold"
+              <button
+                onClick={handleSubmit}
+                disabled={submitting}
+                className="btn-gold flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold disabled:opacity-60"
               >
-                加入 LINE 完成預約
-                <ChevronRight size={16} />
-              </a>
+                {submitting ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    送出中...
+                  </>
+                ) : (
+                  <>
+                    送出預約並通知司機
+                    <ChevronRight size={16} />
+                  </>
+                )}
+              </button>
             )}
           </div>
         </div>
