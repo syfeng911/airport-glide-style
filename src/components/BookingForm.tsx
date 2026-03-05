@@ -295,6 +295,12 @@ const BookingForm = () => {
                     <span className="text-muted-foreground">乘車地點</span>
                     <span className="text-foreground font-medium">{formData.city} {formData.district}</span>
                   </div>
+                  {formData.type === "接機" && formData.flightNo && (
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">班機號碼</span>
+                      <span className="text-foreground font-medium">{formData.flightNo}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
