@@ -1,18 +1,29 @@
 import { useState } from "react";
-import { ChevronRight, ChevronLeft, MapPin, User, Star, Loader2, CheckCircle } from "lucide-react";
+import { ChevronRight, ChevronLeft, MapPin, User, Star, Loader2, CheckCircle, CalendarIcon, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { format } from "date-fns";
+import { zhTW } from "date-fns/locale";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 const cities = ["臺北市", "基隆市", "新北市", "宜蘭縣", "新竹市", "新竹縣", "桃園市", "苗栗縣", "臺中市"];
+
+const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
+const minutes = ["00", "10", "20", "30", "40", "50"];
 
 const BookingForm = () => {
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [formData, setFormData] = useState({
     type: "送機",
     date: "",
     time: "",
+    hour: "08",
+    minute: "00",
     passengers: "1",
     luggage: "1",
     city: "",
@@ -44,8 +55,9 @@ const BookingForm = () => {
     setSubmitting(true);
     setSubmitError("");
     try {
+      const payload = { ...formData, time: `${formData.hour}:${formData.minute}` };
       const { error } = await supabase.functions.invoke("send-line-notification", {
-        body: formData,
+        body: payload,
       });
       if (error) throw error;
       setSubmitted(true);
@@ -153,11 +165,64 @@ const BookingForm = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs text-muted-foreground mb-2 tracking-wide">日期</label>
-                  <input type="date" className={inputClass} value={formData.date} onChange={(e) => update("date", e.target.value)} />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        className={cn(
+                          inputClass,
+                          "flex items-center gap-2 text-left",
+                          !selectedDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon size={15} className="text-primary shrink-0" />
+                        {selectedDate ? format(selectedDate, "yyyy/MM/dd", { locale: zhTW }) : "選擇日期"}
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-auto p-0 border-border bg-card shadow-xl"
+                      align="start"
+                    >
+                      <Calendar
+                        mode="single"
+                        selected={selectedDate}
+                        onSelect={(d) => {
+                          setSelectedDate(d);
+                          if (d) update("date", format(d, "yyyy-MM-dd"));
+                        }}
+                        disabled={(d) => d < new Date(new Date().setHours(0,0,0,0))}
+                        initialFocus
+                        className="pointer-events-auto"
+                        classNames={{
+                          day_selected: "bg-primary text-primary-foreground hover:bg-primary",
+                          day_today: "border border-primary text-primary",
+                        }}
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
                 <div>
                   <label className="block text-xs text-muted-foreground mb-2 tracking-wide">時間</label>
-                  <input type="time" className={inputClass} value={formData.time} onChange={(e) => update("time", e.target.value)} />
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <Clock size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-primary pointer-events-none" />
+                      <select
+                        className={cn(selectClass, "pl-8")}
+                        value={formData.hour}
+                        onChange={(e) => update("hour", e.target.value)}
+                      >
+                        {hours.map((h) => <option key={h} value={h}>{h}</option>)}
+                      </select>
+                    </div>
+                    <span className="flex items-center text-muted-foreground font-bold">:</span>
+                    <select
+                      className={cn(selectClass, "flex-1")}
+                      value={formData.minute}
+                      onChange={(e) => update("minute", e.target.value)}
+                    >
+                      {minutes.map((m) => <option key={m} value={m}>{m}</option>)}
+                    </select>
+                  </div>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -218,7 +283,9 @@ const BookingForm = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">日期時間</span>
-                    <span className="text-foreground font-medium">{formData.date} {formData.time}</span>
+                    <span className="text-foreground font-medium">
+                      {selectedDate ? format(selectedDate, "yyyy/MM/dd") : formData.date} {formData.hour}:{formData.minute}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">人數 / 行李</span>
