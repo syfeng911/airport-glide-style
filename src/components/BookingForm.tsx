@@ -254,12 +254,10 @@ const BookingForm = () => {
                 <label className="block text-xs text-muted-foreground mb-2 tracking-wide">詳細地址</label>
                 <input type="text" placeholder="請輸入詳細地址" className={inputClass} value={formData.district} onChange={(e) => update("district", e.target.value)} />
               </div>
-              {formData.type === "接機" && (
-                <div>
-                  <label className="block text-xs text-muted-foreground mb-2 tracking-wide">班機號碼</label>
-                  <input type="text" placeholder="例：CI-100" className={inputClass} value={formData.flightNo} onChange={(e) => update("flightNo", e.target.value)} />
-                </div>
-              )}
+              <div>
+                <label className="block text-xs text-muted-foreground mb-2 tracking-wide">班機號碼</label>
+                <input type="text" placeholder="例：CI-100" className={inputClass} value={formData.flightNo} onChange={(e) => update("flightNo", e.target.value)} />
+              </div>
             </div>
           )}
 
@@ -274,12 +272,10 @@ const BookingForm = () => {
                 <label className="block text-xs text-muted-foreground mb-2 tracking-wide">聯絡電話</label>
                 <input type="tel" placeholder="請輸入手機號碼" className={inputClass} value={formData.phone} onChange={(e) => update("phone", e.target.value)} />
               </div>
-              {formData.type === "接機" && (
-                <div>
-                  <label className="block text-xs text-muted-foreground mb-2 tracking-wide">班機號碼</label>
-                  <input type="text" placeholder="例：CI-100" className={inputClass} value={formData.flightNo} onChange={(e) => update("flightNo", e.target.value)} />
-                </div>
-              )}
+              <div>
+                <label className="block text-xs text-muted-foreground mb-2 tracking-wide">班機號碼</label>
+                <input type="text" placeholder="例：CI-100" className={inputClass} value={formData.flightNo} onChange={(e) => update("flightNo", e.target.value)} />
+              </div>
               <div className="card-glass rounded-xl p-5 border border-border">
                 <h4 className="text-sm font-semibold text-foreground mb-3">行程確認</h4>
                 <div className="space-y-2 text-sm">
@@ -301,7 +297,7 @@ const BookingForm = () => {
                     <span className="text-muted-foreground">乘車地點</span>
                     <span className="text-foreground font-medium">{formData.city} {formData.district}</span>
                   </div>
-                  {formData.type === "接機" && formData.flightNo && (
+                  {formData.flightNo && (
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">班機號碼</span>
                       <span className="text-foreground font-medium">{formData.flightNo}</span>
