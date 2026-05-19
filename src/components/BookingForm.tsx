@@ -254,10 +254,6 @@ const BookingForm = () => {
                 <label className="block text-xs text-muted-foreground mb-2 tracking-wide">詳細地址</label>
                 <input type="text" placeholder="請輸入詳細地址" className={inputClass} value={formData.district} onChange={(e) => update("district", e.target.value)} />
               </div>
-              <div>
-                <label className="block text-xs text-muted-foreground mb-2 tracking-wide">班機號碼</label>
-                <input type="text" placeholder="例：CI-100" className={inputClass} value={formData.flightNo} onChange={(e) => update("flightNo", e.target.value)} />
-              </div>
             </div>
           )}
 
