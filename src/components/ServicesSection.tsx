@@ -50,12 +50,12 @@ const ServicesSection = () => {
             >
               <div
                 aria-hidden
-                className="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-500"
+                className="absolute inset-0 bg-cover bg-center opacity-60 group-hover:opacity-80 transition-opacity duration-500"
                 style={{ backgroundImage: `url(${s.bg})` }}
               />
               <div
                 aria-hidden
-                className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/40"
+                className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/10"
               />
               <div className="relative">
               <div
