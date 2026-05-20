@@ -87,6 +87,22 @@ const HeroSection = () => {
         </div>
       </div>
 
+      {/* Slide dots */}
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className="w-2.5 h-2.5 rounded-full transition-all duration-300"
+            style={{
+              backgroundColor: i === current ? "hsl(var(--primary))" : "rgba(255,255,255,0.3)",
+              transform: i === current ? "scale(1.3)" : "scale(1)",
+            }}
+            aria-label={`切換到第 ${i + 1} 張輪播圖`}
+          />
+        ))}
+      </div>
+
       {/* Scroll hint */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
         <span className="text-xs text-muted-foreground tracking-widest">SCROLL</span>
