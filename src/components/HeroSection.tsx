@@ -1,12 +1,34 @@
+import { useState, useEffect, useCallback } from "react";
 import heroCar from "@/assets/hero-car.jpg";
+import heroCar2 from "@/assets/hero-car2.jpg";
+import heroCar3 from "@/assets/hero-car3.jpg";
+
+const slides = [heroCar, heroCar2, heroCar3];
 
 const HeroSection = () => {
+  const [current, setCurrent] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % slides.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
+  }, [nextSlide]);
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroCar})` }}
-      />
+      {slides.map((src, i) => (
+        <div
+          key={src}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
+          style={{
+            backgroundImage: `url(${src})`,
+            opacity: i === current ? 1 : 0,
+          }}
+        />
+      ))}
       <div
         className="absolute inset-0"
         style={{ background: "var(--gradient-hero)" }}
