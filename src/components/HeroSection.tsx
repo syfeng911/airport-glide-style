@@ -1,12 +1,34 @@
+import { useState, useEffect, useCallback } from "react";
 import heroCar from "@/assets/hero-car.jpg";
+import heroCar2 from "@/assets/hero-car2.jpg";
+import heroCar3 from "@/assets/hero-car3.jpg";
+
+const slides = [heroCar, heroCar2, heroCar3];
 
 const HeroSection = () => {
+  const [current, setCurrent] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % slides.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
+  }, [nextSlide]);
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroCar})` }}
-      />
+      {slides.map((src, i) => (
+        <div
+          key={src}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
+          style={{
+            backgroundImage: `url(${src})`,
+            opacity: i === current ? 1 : 0,
+          }}
+        />
+      ))}
       <div
         className="absolute inset-0"
         style={{ background: "var(--gradient-hero)" }}
@@ -63,6 +85,22 @@ const HeroSection = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Slide dots */}
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className="w-2.5 h-2.5 rounded-full transition-all duration-300"
+            style={{
+              backgroundColor: i === current ? "hsl(var(--primary))" : "rgba(255,255,255,0.3)",
+              transform: i === current ? "scale(1.3)" : "scale(1)",
+            }}
+            aria-label={`切換到第 ${i + 1} 張輪播圖`}
+          />
+        ))}
       </div>
 
       {/* Scroll hint */}
