@@ -1,4 +1,5 @@
 import { CheckCircle } from "lucide-react";
+import lineQrcode from "@/assets/line-qrcode.png";
 
 const notices = [
   "無論早晚，深夜接送以及飛機誤點皆不額外收費。",
@@ -29,11 +30,12 @@ const ContactSection = () => {
               提供即時報價與預約確認。
             </p>
             <div className="card-glass rounded-2xl p-8 text-center inline-block">
-              <div
-                className="w-48 h-48 rounded-2xl mx-auto mb-4 flex items-center justify-center text-black font-bold text-4xl"
-                style={{ background: "var(--gradient-gold)" }}
-              >
-                LINE
+              <div className="w-48 h-48 rounded-2xl mx-auto mb-4 bg-white p-2 flex items-center justify-center">
+                <img
+                  src={lineQrcode}
+                  alt="LINE 官方帳號 QR Code"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <p className="text-sm text-muted-foreground">官方帳號</p>
               <p className="text-lg font-bold text-primary mt-1">@200ycrlk</p>
