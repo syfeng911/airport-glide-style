@@ -30,17 +30,12 @@ const ContactSection = () => {
               提供即時報價與預約確認。
             </p>
             <div className="card-glass rounded-2xl p-8 text-center inline-block">
-              <div
-                className="w-48 h-48 rounded-2xl mx-auto mb-4 p-3 flex items-center justify-center"
-                style={{ background: "var(--gradient-gold)" }}
-              >
-                <div className="w-full h-full rounded-xl bg-white p-2 flex items-center justify-center">
-                  <img
-                    src={lineQrcode}
-                    alt="LINE 官方帳號 QR Code"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
+              <div className="w-48 h-48 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                <img
+                  src={lineQrcode}
+                  alt="LINE 官方帳號 QR Code"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <p className="text-sm text-muted-foreground">官方帳號</p>
               <p className="text-lg font-bold text-primary mt-1">@200ycrlk</p>
