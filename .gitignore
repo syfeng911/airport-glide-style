@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Bun lockfile (use npm/package-lock.json for deployment)
+bun.lockb
+bun.lock
