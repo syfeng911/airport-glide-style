@@ -38,11 +38,12 @@ const HeroSection = () => {
       {/* Nav */}
       <nav className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-8 py-6">
         <div className="flex items-center">
-          <img
-            src={gohomeLogo}
-            alt="GoHome 機場接送"
-            className="h-12 md:h-14 w-auto object-contain"
-          />
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center border border-primary/40 shadow-lg shadow-primary/20">
+            <span className="text-background font-bold text-sm">24H</span>
+          </div>
+          <span className="ml-3 text-foreground font-bold text-lg tracking-wide" style={{ fontFamily: "'Noto Serif TC', serif" }}>
+            GoHome 機場接送
+          </span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           <a href="#services" className="hover:text-primary transition-colors tracking-wide">服務特色</a>
