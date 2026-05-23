@@ -37,9 +37,11 @@ const HeroSection = () => {
       {/* Nav */}
       <nav className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-8 py-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "var(--gradient-gold)" }}>
-            <span className="text-black font-bold text-sm">24H</span>
-          </div>
+          <img
+            src="/og-image.jpg"
+            alt="GoHome 機場接送"
+            className="w-10 h-10 rounded-full object-cover border border-primary/40"
+          />
           <span className="text-foreground font-bold text-lg tracking-wider" style={{ fontFamily: "'Noto Serif TC', serif" }}>
             GoHome 機場接送
           </span>
