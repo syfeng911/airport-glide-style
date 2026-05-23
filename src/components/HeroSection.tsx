@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import heroCar from "@/assets/hero-car.jpg";
 import heroCar2 from "@/assets/hero-car2.jpg";
 import heroCar3 from "@/assets/hero-car3.jpg";
+import gohomeLogo from "@/assets/gohome-logo.png";
 
 const slides = [heroCar, heroCar2, heroCar3];
 
@@ -36,15 +37,12 @@ const HeroSection = () => {
 
       {/* Nav */}
       <nav className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-8 py-6">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center">
           <img
-            src="/og-image.jpg"
+            src={gohomeLogo}
             alt="GoHome 機場接送"
-            className="w-10 h-10 rounded-full object-cover border border-primary/40"
+            className="h-12 md:h-14 w-auto object-contain"
           />
-          <span className="text-foreground font-bold text-lg tracking-wider" style={{ fontFamily: "'Noto Serif TC', serif" }}>
-            GoHome 機場接送
-          </span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           <a href="#services" className="hover:text-primary transition-colors tracking-wide">服務特色</a>
