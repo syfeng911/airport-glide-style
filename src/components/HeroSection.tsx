@@ -40,8 +40,7 @@ const HeroSection = () => {
         <div className="flex items-center gap-3">
           <img src={gohomeLogo} alt="GoHome 機場接送" className="h-12 md:h-14 w-auto object-contain" />
           <div className="hidden sm:flex flex-col leading-tight">
-            <span className="text-foreground font-bold text-lg tracking-wide">GoHome</span>
-            <span className="text-primary text-sm tracking-wider">24H 機場接送</span>
+            <span className="text-foreground font-bold text-lg tracking-wide"> 24H機場接送 </span>
           </div>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
